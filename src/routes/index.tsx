@@ -1,24 +1,68 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Hero } from "@/components/portfolio/Hero";
+import { Stats, About, WhyStarted, Purpose } from "@/components/portfolio/Story";
+import { Services, Journey } from "@/components/portfolio/Services";
+import { Gallery } from "@/components/portfolio/Gallery";
+import { Testimonials } from "@/components/portfolio/Testimonials";
+import { Contact } from "@/components/portfolio/Contact";
+import { Footer, MobileActionBar } from "@/components/portfolio/Footer";
+import { heroPhoto } from "@/data/gallery";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const title = "Vishnu Vardhan Reddy — Kangen Water Distributor, Hyderabad";
+const description =
+  "Digital card and portfolio of Vishnu Vardhan Reddy, Enagic Independent Distributor in Hyderabad. Kangen Water demonstrations, device guidance, installation support and business opportunity.";
+const ogImage = new URL(heroPhoto, "https://id-preview--81291183-3111-4d83-aee0-c7aca99aa050.lovable.app").href;
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "profile" },
+      { property: "og:image", content: ogImage },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: ogImage },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Vishnu Vardhan Reddy",
+  jobTitle: "Enagic Independent Distributor",
+  telephone: "+91-9885750369",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Vishnupuri Colony, Medipally",
+    addressLocality: "Hyderabad",
+    addressRegion: "Telangana",
+    addressCountry: "IN",
+  },
+  worksFor: { "@type": "Organization", name: "Enagic — Kangen Water" },
+};
+
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <Hero />
+      <Stats />
+      <main>
+        <About />
+        <WhyStarted />
+        <Purpose />
+        <Services />
+        <Journey />
+        <Gallery />
+        <Testimonials />
+        <Contact />
+      </main>
+      <Footer />
+      <MobileActionBar />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>
   );
 }
