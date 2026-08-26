@@ -9,7 +9,10 @@ const stats = [
 
 export function Stats() {
   return (
-    <section className="mx-auto -mt-9 max-w-5xl px-5 md:px-8" aria-label="Key milestones">
+    <section
+      className="relative z-10 mx-auto -mt-9 max-w-5xl px-5 md:px-8"
+      aria-label="Key milestones"
+    >
       <div className="grid gap-3 rounded-3xl border border-border bg-card p-5 shadow-lift sm:grid-cols-3 md:p-7">
         {stats.map((s) => (
           <div key={s.label} className="text-center">
