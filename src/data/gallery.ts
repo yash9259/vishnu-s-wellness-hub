@@ -1,7 +1,7 @@
 const imagePath = (filename: string) => `/images/${filename}`;
 
 export const heroPhoto = imagePath("presentation-stage.jpg");
-export const portraitPhoto = imagePath("customer-demo-bottle.jpg");
+export const portraitPhoto = imagePath("portrait-professional.jpg");
 
 export type GalleryItem = {
   url: string;
