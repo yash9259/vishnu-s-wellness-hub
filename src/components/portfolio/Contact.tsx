@@ -32,16 +32,23 @@ export function Contact() {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase.from("enquiries").insert({
+    const payload = {
       name: form.name.trim(),
       phone: form.phone.trim(),
       email: form.email.trim() || null,
       interest: form.interest,
       message: form.message.trim() || null,
-    });
+    };
+    const [{ error }, sheetResult] = await Promise.all([
+      supabase.from("enquiries").insert(payload),
+      appendEnquiryToSheet({ data: payload }).catch((err: unknown) => {
+        console.error("Google Sheets sync failed", err);
+        return null;
+      }),
+    ]);
     setSubmitting(false);
 
-    if (error) {
+    if (error && !sheetResult) {
       toast.error("Could not send right now — please use WhatsApp instead");
       return;
     }
