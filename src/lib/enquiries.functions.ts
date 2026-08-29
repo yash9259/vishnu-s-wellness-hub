@@ -141,12 +141,30 @@ const appendViaLovableGateway = async (data: z.infer<typeof schema>) => {
   }
 };
 
+const appendViaAppsScript = async (data: z.infer<typeof schema>) => {
+  const url = process.env["APPS_SCRIPT_URL"];
+  if (!url) throw new Error("APPS_SCRIPT_URL is not set");
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(data),
+    redirect: "follow",
+  });
+  if (!response.ok) {
+    const errorBody = await response.text();
+    console.error(`Apps Script append failed [${response.status}]: ${errorBody}`);
+    throw new Error(`Apps Script append failed [${response.status}]: ${errorBody}`);
+  }
+};
+
 export const appendEnquiryToSheet = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => schema.parse(data))
   .handler(async ({ data }) => {
-    // Prefer a direct Google service account (works on Vercel / any host).
-    // Fall back to the Lovable connector gateway when running on Lovable.
-    if (process.env["GOOGLE_SERVICE_ACCOUNT_JSON"]) {
+    // Order: Apps Script web app (simplest, works anywhere) → service account
+    // (Vercel/any host) → Lovable connector gateway (Lovable hosting).
+    if (process.env["APPS_SCRIPT_URL"]) {
+      await appendViaAppsScript(data);
+    } else if (process.env["GOOGLE_SERVICE_ACCOUNT_JSON"]) {
       await appendViaServiceAccount(data);
     } else {
       await appendViaLovableGateway(data);
