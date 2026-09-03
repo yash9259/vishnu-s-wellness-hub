@@ -90,6 +90,14 @@ export type Content = {
     whatsappMsg: string;
     assurances: { title: string; body: string }[];
   };
+  card: {
+    role: string;
+    aboutTitle: string;
+    aboutBody: string;
+    website: string;
+    bookCta: string;
+    footnote: string;
+  };
   footer: { rights: string; disclaimer: string; call: string; whatsapp: string; book: string };
   language: { label: string; english: string; telugu: string };
 };
@@ -313,6 +321,15 @@ export const en: Content = {
       { title: "At your convenience", body: "Home, office or a simple online session." },
       { title: "Honest guidance", body: "Clear information, never any pressure." },
     ],
+  },
+  card: {
+    role: "Kangen Water • Enagic Independent Distributor",
+    aboutTitle: "About Me",
+    aboutBody:
+      "Hi, I'm Vishnu Vardhan Reddy from Hyderabad. After 20+ years in business, I now help families discover healthier living through Kangen Water — and guide people who want to build an honest additional income.",
+    website: "Visit My Website",
+    bookCta: "Book a Free Consultation",
+    footnote: "Independent Enagic Distributor • Hyderabad",
   },
   footer: {
     rights: "Independent Enagic Distributor. Website coming soon.",
@@ -541,6 +558,15 @@ export const te: Content = {
       { title: "మీకు అనుకూలంగా", body: "ఇల్లు, ఆఫీసు లేదా సులభమైన ఆన్‌లైన్ సెషన్." },
       { title: "నిజాయితీ మార్గదర్శకత్వం", body: "స్పష్టమైన సమాచారం, ఎలాంటి ఒత్తిడి లేదు." },
     ],
+  },
+  card: {
+    role: "కాంగెన్ వాటర్ • ఎనాజిక్ ఇండిపెండెంట్ డిస్ట్రిబ్యూటర్",
+    aboutTitle: "నా గురించి",
+    aboutBody:
+      "నమస్కారం, నేను హైదరాబాద్ నుండి విష్ణు వర్ధన్ రెడ్డి. 20+ సంవత్సరాల వ్యాపార అనుభవం తర్వాత, ఇప్పుడు కాంగెన్ వాటర్ ద్వారా కుటుంబాలకు ఆరోగ్యకరమైన జీవనశైలిని అందిస్తూ, అదనపు ఆదాయం కోరుకునేవారికి మార్గదర్శకత్వం చేస్తున్నాను.",
+    website: "నా వెబ్‌సైట్ చూడండి",
+    bookCta: "ఉచిత సంప్రదింపు బుక్ చేయండి",
+    footnote: "ఇండిపెండెంట్ ఎనాజిక్ డిస్ట్రిబ్యూటర్ • హైదరాబాద్",
   },
   footer: {
     rights: "ఇండిపెండెంట్ ఎనాజిక్ డిస్ట్రిబ్యూటర్. వెబ్‌సైట్ త్వరలో.",
