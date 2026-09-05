@@ -1,3 +1,5 @@
+import { hi } from "./content.hi";
+
 export type Content = {
   nav: { home: string; services: string; gallery: string; brochure: string; book: string };
   hero: {
@@ -99,7 +101,7 @@ export type Content = {
     footnote: string;
   };
   footer: { rights: string; disclaimer: string; call: string; whatsapp: string; book: string };
-  language: { label: string; english: string; telugu: string };
+  language: { label: string; english: string; telugu: string; hindi: string };
 };
 
 export const en: Content = {
@@ -338,7 +340,7 @@ export const en: Content = {
     whatsapp: "WhatsApp",
     book: "Book",
   },
-  language: { label: "Language", english: "English", telugu: "తెలుగు" },
+  language: { label: "Language", english: "English", telugu: "తెలుగు", hindi: "हिंदी" },
 };
 
 export const te: Content = {
@@ -575,8 +577,8 @@ export const te: Content = {
     whatsapp: "వాట్సాప్",
     book: "బుక్",
   },
-  language: { label: "భాష", english: "English", telugu: "తెలుగు" },
+  language: { label: "భాష", english: "English", telugu: "తెలుగు", hindi: "हिंदी" },
 };
 
-export const dictionaries = { en, te };
+export const dictionaries = { en, te, hi };
 export type Lang = keyof typeof dictionaries;
