@@ -12,7 +12,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "te" || stored === "en") setLangState(stored);
+    if (stored === "te" || stored === "en" || stored === "hi") setLangState(stored);
   }, []);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ export function LanguageToggle({ className = "" }: { className?: string }) {
   const options: { id: Lang; label: string }[] = [
     { id: "en", label: t.language.english },
     { id: "te", label: t.language.telugu },
+    { id: "hi", label: t.language.hindi },
   ];
 
   return (
