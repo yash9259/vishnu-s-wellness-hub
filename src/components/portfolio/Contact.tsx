@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { appendEnquiryToSheet } from "@/lib/enquiries.functions";
 import { profile, whatsappLink } from "@/lib/profile";
 import { Reveal } from "./Reveal";
 
@@ -39,20 +38,24 @@ export function Contact() {
       interest: form.interest,
       message: form.message.trim() || null,
     };
-    const [{ error }, sheetResult] = await Promise.all([
-      supabase.from("enquiries").insert(payload),
-      appendEnquiryToSheet({ data: payload }).catch((err: unknown) => {
-        console.error("Google Sheets sync failed", err);
-        return null;
-      }),
-    ]);
+    const { error } = await supabase.from("enquiries").insert(payload);
+    if (error) console.error("Enquiry save failed", error);
     setSubmitting(false);
 
-    if (error && !sheetResult) {
-      toast.error("Could not send right now — please use WhatsApp instead");
-      return;
-    }
-    toast.success("Thank you! Vishnu will get back to you shortly.");
+    const whatsappMessage = [
+      "New enquiry from my website:",
+      "",
+      `Name: ${payload.name}`,
+      `Mobile: ${payload.phone}`,
+      payload.email ? `Email: ${payload.email}` : null,
+      `Interested in: ${payload.interest}`,
+      payload.message ? `Message: ${payload.message}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+    window.open(whatsappLink(whatsappMessage), "_blank", "noopener,noreferrer");
+
+    toast.success("Opening WhatsApp — just press send to deliver your enquiry.");
     setForm({ name: "", phone: "", email: "", interest: interests[0]!, message: "" });
   };
 
